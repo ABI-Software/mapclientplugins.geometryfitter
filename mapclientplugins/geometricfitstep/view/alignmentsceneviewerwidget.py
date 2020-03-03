@@ -5,7 +5,7 @@ Created on July 15, 2015
 '''
 from PySide import QtCore
 from math import sqrt
-from mapclientplugins.smoothfitstep.maths import vectorops
+from mapclientplugins.geometricfitstep.utils import vectorops
 from opencmiss.zincwidgets.sceneviewerwidget import SceneviewerWidget
 
 class AlignmentSceneviewerWidget(SceneviewerWidget):
