@@ -68,6 +68,8 @@ class GeometryFitterModel(object):
         self._isStateAlign = False
         self._alignStep = None
         self._modelTransformedCoordinateField = None
+        self._alignSettingsUIUpdateCallback = None
+        self._alignSettingsChangeCallback = None
 
     def _initGraphicsModules(self):
         context = self._fitter.getContext()
@@ -614,9 +616,9 @@ class GeometryFitterModel(object):
                     pointattr.setOrientationScaleField(self._fitter.getDataProjectionOrientationField())
                     pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
                     pointattr.setScaleFactors([0.0, 0.0, 0.0])
-                else:
-                    pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-                    dataProjectionPoints.setRenderPointSize(3.0)
+                # else:
+                #     pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+                #     dataProjectionPoints.setRenderPointSize(3.0)
                 dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
                 dataProjectionPoints.setName("displayDataProjectionPoints")
                 dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())

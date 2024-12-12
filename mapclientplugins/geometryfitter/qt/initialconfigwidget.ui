@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InitialConfigWidget</class>
+ <widget class="QWidget" name="InitialConfigWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>InitialConfig</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="configInitial_groupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Initial</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="configModelCoordinates_label">
+        <property name="text">
+         <string>Model coordinates:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Model coordinate field to fit.&lt;br/&gt;Output fitted field takes name of this field preceded by &amp;quot;fitted &amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="configModelFitGrouplabel">
+        <property name="text">
+         <string>Model fit group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="FieldChooserWidget" name="configModelFitGroup_fieldChooser">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional subset of model to fit.&lt;br/&gt;If not set, whole model is fitted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="FieldChooserWidget" name="configFlattenGroup_fieldChooser">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional surface or line group to constrain to z = 0.&lt;/p&gt;&lt;p&gt;Data weight for this group scales flattening term.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="configFlattenGroup_label">
+        <property name="text">
+         <string>Flatten group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="configFibreOrientation_label">
+        <property name="text">
+         <string>Fibre orientation:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="FieldChooserWidget" name="configFibreOrientation_fieldChooser">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional field supplying Euler angles to rotate local 'fibre' axes on which strain and curvature penalties are applied. Clear to apply on global x, y, z axes.&lt;/p&gt;&lt;p&gt;Required for applying strain and curvature penalties on 2D mesh fits with 3 coordinate components.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="configDataCoordinates_label">
+        <property name="text">
+         <string>Data coordinates:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Field giving coordinates of data points.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="configDiagnosticLevel_label">
+        <property name="text">
+         <string>Diagnostic level:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="configMarkerGroup_label">
+        <property name="text">
+         <string>Marker group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QSpinBox" name="configDiagnosticLevel_spinBox">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Increase to 1 to see diagnostic output, 2 to see more verbose optimization diagnostic output.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="maximum">
+         <number>2</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FieldChooserWidget</class>
+   <extends>QComboBox</extends>
+   <header>cmlibs/widgets/fieldchooserwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
