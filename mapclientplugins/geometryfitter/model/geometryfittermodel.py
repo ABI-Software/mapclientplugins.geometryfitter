@@ -6,6 +6,7 @@ import json
 
 from cmlibs.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
     matrix_mult, rotation_matrix_to_euler, matrix_inv, identity_matrix
+from cmlibs.utils.zinc.field import create_jacobian_determinant_field
 from cmlibs.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from cmlibs.utils.zinc.general import ChangeManager
 from cmlibs.utils.zinc.group import group_add_group_elements, group_add_group_nodes
@@ -61,6 +62,7 @@ class GeometryFitterModel(object):
             "displaySurfacesExterior": True,
             "displaySurfacesTranslucent": True,
             "displaySurfacesWireframe": False,
+            "displayZeroJacobianContours": False,
             "displaySubgroupFieldName":  None
         }
         self._loadSettings(reset_settings)
@@ -173,7 +175,8 @@ class GeometryFitterModel(object):
     def _setVisibility(self, graphicsName, show):
         self._settings[graphicsName] = show
         graphics = self.getScene().findGraphicsByName(graphicsName)
-        graphics.setVisibilityFlag(show)
+        if graphics.isValid():
+            graphics.setVisibilityFlag(show)
 
     def _setMultipleGraphicsVisibility(self, graphicsName, show):
         '''
@@ -347,6 +350,12 @@ class GeometryFitterModel(object):
     def setDisplayElementAxes(self, show):
         self._setVisibility("displayElementAxes", show)
 
+    def isDisplayZeroJacobianContours(self):
+        return self._getVisibility("displayZeroJacobianContours")
+
+    def setDisplayZeroJacobianContours(self, show):
+        self._setVisibility("displayZeroJacobianContours", show)
+
     def needPerturbLines(self):
         """
         Return if solid surfaces are drawn with lines, requiring perturb lines to be activated.
@@ -458,6 +467,11 @@ class GeometryFitterModel(object):
                     maxScale = 1.0
                 glyphWidth = 0.01 * maxScale
             glyphWidthSmall = 0.25 * glyphWidth
+
+            jacobian = None
+            if meshDimension == 3:
+                jacobian = create_jacobian_determinant_field(
+                    modelCoordinates, self._fitter.getModelReferenceCoordinatesField())
 
         # make graphics
         scene = self._fitter.getRegion().getScene()
@@ -706,6 +720,16 @@ class GeometryFitterModel(object):
             surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
 
+            # zero Jacobian contours
+            if jacobian:
+                contours = scene.createGraphicsContours()
+                contours.setCoordinateField(modelCoordinates)
+                contours.setIsoscalarField(jacobian)
+                contours.setListIsovalues([0.0])
+                contours.setMaterial(self._materialmodule.findMaterialByName("magenta"))
+                contours.setName("displayZeroJacobianContours")
+                contours.setVisibilityFlag(self.isDisplayZeroJacobianContours())
+
             # above graphics are created without subgroup field set, and modified here:
             displaySubgroupField = self.getGraphicsDisplaySubgroupField()
             if displaySubgroupField:
@@ -752,11 +776,13 @@ class GeometryFitterModel(object):
                 "displayLines",
                 "displayNodeNumbers",
                 "displayNodePoints",
-                "displaySurfaces"
+                "displaySurfaces",
+                "displayZeroJacobianContours"
             ]
             for graphicsName in graphicsNames:
                 graphics = scene.findGraphicsByName(graphicsName)
-                graphics.setSubgroupField(useSubgroupField)
+                if graphics.isValid():
+                    graphics.setSubgroupField(useSubgroupField)
 
     def autorangeSpectrum(self):
         scene = self._fitter.getRegion().getScene()

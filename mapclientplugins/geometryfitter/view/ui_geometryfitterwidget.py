@@ -34,7 +34,7 @@ class Ui_GeometryFitterWidget(object):
     def setupUi(self, GeometryFitterWidget):
         if not GeometryFitterWidget.objectName():
             GeometryFitterWidget.setObjectName(u"GeometryFitterWidget")
-        GeometryFitterWidget.resize(1329, 1260)
+        GeometryFitterWidget.resize(1327, 1255)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -115,7 +115,7 @@ class Ui_GeometryFitterWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 435, 114))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 422, 92))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.initialConfig_widget = InitialConfigWidget(self.stepedit_scrollAreaWidgetContents)
@@ -358,32 +358,6 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayNodeDerivativeLabels_frame)
 
-        self.displayElements_frame = QFrame(self.display_tab)
-        self.displayElements_frame.setObjectName(u"displayElements_frame")
-        self.displayElements_frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.displayElements_frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.horizontalLayout_4 = QHBoxLayout(self.displayElements_frame)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.displayElementNumbers_checkBox = QCheckBox(self.displayElements_frame)
-        self.displayElementNumbers_checkBox.setObjectName(u"displayElementNumbers_checkBox")
-
-        self.horizontalLayout_4.addWidget(self.displayElementNumbers_checkBox)
-
-        self.displayElementAxes_checkBox = QCheckBox(self.displayElements_frame)
-        self.displayElementAxes_checkBox.setObjectName(u"displayElementAxes_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayElementAxes_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayElementAxes_checkBox.setSizePolicy(sizePolicy4)
-
-        self.horizontalLayout_4.addWidget(self.displayElementAxes_checkBox)
-
-        self.displayElements_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.displayElements_horizontalSpacer)
-
-
-        self.verticalLayout_7.addWidget(self.displayElements_frame)
-
         self.displayLines_frame = QFrame(self.display_tab)
         self.displayLines_frame.setObjectName(u"displayLines_frame")
         self.displayLines_frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -449,6 +423,37 @@ class Ui_GeometryFitterWidget(object):
 
 
         self.verticalLayout_7.addWidget(self.displaySurfaces_frame)
+
+        self.displayElements_frame = QFrame(self.display_tab)
+        self.displayElements_frame.setObjectName(u"displayElements_frame")
+        self.displayElements_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayElements_frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_4 = QHBoxLayout(self.displayElements_frame)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.displayElementNumbers_checkBox = QCheckBox(self.displayElements_frame)
+        self.displayElementNumbers_checkBox.setObjectName(u"displayElementNumbers_checkBox")
+
+        self.horizontalLayout_4.addWidget(self.displayElementNumbers_checkBox)
+
+        self.displayElementAxes_checkBox = QCheckBox(self.displayElements_frame)
+        self.displayElementAxes_checkBox.setObjectName(u"displayElementAxes_checkBox")
+        sizePolicy4.setHeightForWidth(self.displayElementAxes_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayElementAxes_checkBox.setSizePolicy(sizePolicy4)
+
+        self.horizontalLayout_4.addWidget(self.displayElementAxes_checkBox)
+
+        self.displayZeroJacobianContours_checkBox = QCheckBox(self.displayElements_frame)
+        self.displayZeroJacobianContours_checkBox.setObjectName(u"displayZeroJacobianContours_checkBox")
+
+        self.horizontalLayout_4.addWidget(self.displayZeroJacobianContours_checkBox)
+
+        self.displayElements_horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.displayElements_horizontalSpacer)
+
+
+        self.verticalLayout_7.addWidget(self.displayElements_frame)
 
         self.controls_tabWidget.addTab(self.display_tab, "")
         self.error_statistics_tab = QWidget()
@@ -590,14 +595,18 @@ class Ui_GeometryFitterWidget(object):
         self.displayNodeDerivativeLabelsD13_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"D13", None))
         self.displayNodeDerivativeLabelsD23_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"D23", None))
         self.displayNodeDerivativeLabelsD123_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"D123", None))
-        self.displayElementNumbers_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Element numbers", None))
-        self.displayElementAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Element axes", None))
         self.displayLines_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Lines", None))
         self.displayLinesExterior_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Exterior", None))
         self.displaySurfaces_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Surfaces", None))
         self.displaySurfacesExterior_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Exterior", None))
         self.displaySurfacesTranslucent_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Transluc.", None))
         self.displaySurfacesWireframe_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Wireframe", None))
+        self.displayElementNumbers_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Element numbers", None))
+        self.displayElementAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Element axes", None))
+#if QT_CONFIG(tooltip)
+        self.displayZeroJacobianContours_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>For 3-D meshes only: show contours where Jacobian (determinant of gradient of fitted coordinates w.r.t. reference coordinates) crosses zero, surrounding problem regions of negative volume.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.displayZeroJacobianContours_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Zero Jacobian Contours", None))
         self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.display_tab), QCoreApplication.translate("GeometryFitterWidget", u"Display", None))
         self.displayRMSError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"RMS error:", None))
         self.displayMaxError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Maximum error:", None))

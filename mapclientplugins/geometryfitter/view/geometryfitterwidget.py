@@ -8,11 +8,11 @@ from PySide6 import QtCore, QtWidgets
 
 from cmlibs.maths.vectorops import dot, magnitude, mult, normalize, sub
 from cmlibs.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group, \
-    field_is_managed_real_1_to_3_components, field_is_managed_group_mesh
+    field_is_managed_real_1_to_3_components, field_is_managed_group_mesh, get_group_list
 from cmlibs.widgets.handlers.modelalignment import ModelAlignment
 from cmlibs.widgets.handlers.scenemanipulation import SceneManipulation
 from cmlibs.widgets.utils import parse_real_non_negative, parse_vector_3, parse_vector, parse_real, set_wait_cursor
-from cmlibs.zinc.field import Field
+from cmlibs.zinc.field import Field, FieldGroup
 
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepconfig import FitterStepConfig
@@ -368,6 +368,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.clicked.connect(self._displaySurfacesExteriorClicked)
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
         self._ui.displaySurfacesWireframe_checkBox.clicked.connect(self._displaySurfacesWireframeClicked)
+        self._ui.displayZeroJacobianContours_checkBox.clicked.connect(self._displayZeroJacobianContoursClicked)
         self._setupDisplayGroupWidgets()
 
     def _setupDisplayGroupWidgets(self):
@@ -413,6 +414,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.setChecked(self._model.isDisplaySurfacesExterior())
         self._ui.displaySurfacesTranslucent_checkBox.setChecked(self._model.isDisplaySurfacesTranslucent())
         self._ui.displaySurfacesWireframe_checkBox.setChecked(self._model.isDisplaySurfacesWireframe())
+        self._ui.displayZeroJacobianContours_checkBox.setChecked(self._model.isDisplayZeroJacobianContours())
         self._displayErrors()
 
     def _displayErrors(self):
@@ -520,6 +522,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _displaySurfacesWireframeClicked(self):
         self._model.setDisplaySurfacesWireframe(self._ui.displaySurfacesWireframe_checkBox.isChecked())
 
+    def _displayZeroJacobianContoursClicked(self):
+        self._model.setDisplayZeroJacobianContours(self._ui.displayZeroJacobianContours_checkBox.isChecked())
+
     # === group setting widgets ===
 
     def _setupGroupSettingWidgets(self):
@@ -530,6 +535,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupSettings_widget.groupSettings_fieldChooser.setNullObjectName("- Default -")
         self._ui.groupSettings_widget.groupSettings_fieldChooser.setConditional(field_is_managed_group)
         self._ui.groupSettings_widget.groupSettings_fieldChooser.setField(Field())
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setNullObjectName("-")
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setConditional(field_is_managed_group)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setField(Field())
 
     def _makeConnectionsGroup(self):
         self._ui.groupSettings_widget.groupSettings_fieldChooser.currentIndexChanged.connect(self._groupSettingsGroupChanged)
@@ -539,6 +548,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupSettings_widget.groupConfigDataProportion_lineEdit.editingFinished.connect(self._groupConfigDataProportionEntered)
         self._ui.groupSettings_widget.groupConfigOutlierLength_checkBox.clicked.connect(self._groupConfigOutlierLengthClicked)
         self._ui.groupSettings_widget.groupConfigOutlierLength_lineEdit.editingFinished.connect(self._groupConfigOutlierLengthEntered)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_checkBox.clicked.connect(self._groupConfigProjectionSubgroupClicked)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.currentIndexChanged.connect(self._groupConfigProjectionSubgroupFieldChanged)
         self._ui.groupSettings_widget.groupFitDataWeight_checkBox.clicked.connect(self._groupFitDataWeightClicked)
         self._ui.groupSettings_widget.groupFitDataWeight_lineEdit.editingFinished.connect(self._groupFitDataWeightEntered)
         self._ui.groupSettings_widget.groupFitDataSlidingFactor_checkBox.clicked.connect(self._groupFitDataSlidingFactorClicked)
@@ -561,6 +572,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._updateGroupConfigCentralProjection()
             self._updateGroupConfigDataProportion()
             self._updateGroupConfigOutlierLength()
+            self._updateGroupConfigProjectionSubgroup()
         elif isFit:
             self._updateGroupFitDataWeight()
             self._updateGroupFitDataSlidingFactor()
@@ -573,6 +585,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupSettings_widget.groupConfigDataProportion_lineEdit.setVisible(isConfig)
         self._ui.groupSettings_widget.groupConfigOutlierLength_checkBox.setVisible(isConfig)
         self._ui.groupSettings_widget.groupConfigOutlierLength_lineEdit.setVisible(isConfig)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_checkBox.setVisible(isConfig)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setVisible(isConfig)
         self._ui.groupSettings_widget.groupFitDataWeight_checkBox.setVisible(isFit)
         self._ui.groupSettings_widget.groupFitDataWeight_lineEdit.setVisible(isFit)
         self._ui.groupSettings_widget.groupFitDataSlidingFactor_checkBox.setVisible(isFit)
@@ -603,23 +617,25 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         groupName = self._getGroupSettingsGroupName()
         data, isLocallySet, inheritable = func(groupName)
         realFormat = "{:.4g}"
-        lineEditDisable = True
+        editorDisable = True
         checkBoxTristate = False
         checkBoxState = QtCore.Qt.CheckState.Unchecked
         if isinstance(data, float):
             data = realFormat.format(data)
         elif isinstance(data, list):
             data = ", ".join(realFormat.format(e) for e in data)
+        elif isinstance(data, bool):
+            pass
         else:
-            assert isinstance(data, bool)
+            assert (data is None) or isinstance(data, FieldGroup)
         if inheritable:
             checkBoxTristate = True
-            if isLocallySet is not None:
+            if not (isLocallySet or (isLocallySet is None)):
                 checkBoxState = QtCore.Qt.CheckState.PartiallyChecked
-        if isLocallySet:
+        if isLocallySet and (data is not None):
             checkBoxState = QtCore.Qt.CheckState.Checked
-            lineEditDisable = False
-        return checkBoxTristate, checkBoxState, lineEditDisable, data
+            editorDisable = False
+        return checkBoxTristate, checkBoxState, editorDisable, data
 
     def _updateGroupConfigCentralProjection(self):
         checkBoxTristate, checkBoxState, lineEditDisable, isConfigCentralProjectionSet = \
@@ -702,6 +718,44 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         groupName = self._getGroupSettingsGroupName()
         self._getConfig().setGroupOutlierLength(groupName, value)
         self._updateGroupConfigOutlierLength()
+
+    def _updateGroupConfigProjectionSubgroup(self):
+        checkBoxTristate, checkBoxState, fieldchooserDisable, groupFieldOrNone = \
+            self._getGroupSettingDisplayState(self._getConfig().getGroupProjectionSubgroup)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_checkBox.setTristate(checkBoxTristate)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_checkBox.setCheckState(checkBoxState)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setDisabled(fieldchooserDisable)
+        self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.setField(groupFieldOrNone)
+
+    def _groupConfigProjectionSubgroupClicked(self):
+        checkState = self._ui.groupSettings_widget.groupConfigProjectionSubgroup_checkBox.checkState()
+        groupName = self._getGroupSettingsGroupName()
+        if checkState == QtCore.Qt.CheckState.Unchecked:
+            self._getConfig().setGroupProjectionSubgroup(groupName, None)
+        elif checkState == QtCore.Qt.CheckState.PartiallyChecked:
+            self._getConfig().clearGroupProjectionSubgroup(groupName)
+        else:
+            subgroup = self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.getField()
+            if not subgroup:
+                # get the first managed group field, if any
+                fielditer = self._fitter.getFieldmodule().createFielditerator()
+                field = fielditer.next()
+                while field.isValid():
+                    if field.isManaged() and field.castGroup().isValid():
+                        subgroup = field
+                        break
+                    field = fielditer.next()
+            self._getConfig().setGroupProjectionSubgroup(groupName, subgroup)
+        self._updateGroupConfigProjectionSubgroup()
+
+    def _groupConfigProjectionSubgroupFieldChanged(self, index):
+        """
+        Callback for change in group config projection subgroup field, to project onto intersected group.
+        """
+        field = self._ui.groupSettings_widget.groupConfigProjectionSubgroup_fieldChooser.getField()
+        groupName = self._getGroupSettingsGroupName()
+        self._getConfig().setGroupProjectionSubgroup(groupName, field)
+        self._updateGroupConfigProjectionSubgroup()  # in case of None
 
     def _updateGroupFitDataWeight(self):
         checkBoxTristate, checkBoxState, lineEditDisable, dataWeightStr = \

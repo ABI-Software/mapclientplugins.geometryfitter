@@ -78,7 +78,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QCheckBox" name="groupConfigDataProportion_checkBox">
         <property name="text">
          <string>Data proportion:</string>
@@ -88,7 +88,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QLineEdit" name="groupConfigDataProportion_lineEdit">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Value from 0.0 to 1.0 giving proportion of data included in fit expression.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -96,6 +96,20 @@
        </widget>
       </item>
       <item row="5" column="0">
+       <widget class="QCheckBox" name="groupConfigOutlierLength_checkBox">
+        <property name="text">
+         <string>Outlier length:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="groupConfigOutlierLength_lineEdit">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Value for excluding outlier data points based on projection length:&lt;/p&gt;&lt;p&gt;&amp;lt; 0.0: Proportion of maximum projection length to exclude e.g. -0.1 removes data points with projections within 10% of maximum.&lt;/p&gt;&lt;p&gt;0.0: No outlier exclusion applied.&lt;/p&gt;&lt;p&gt;&amp;gt;0.0: Positive absolute projection length above which data points are excluded.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
        <widget class="QCheckBox" name="groupFitDataWeight_checkBox">
         <property name="text">
          <string>Data weight:</string>
@@ -105,7 +119,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="7" column="1">
        <widget class="QLineEdit" name="groupFitDataWeight_lineEdit">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Real value multiplying the data projection error; higher values make the group fit closer relative to other groups&lt;/p&gt;&lt;p&gt;It is recommended that the default group data weight be kept at 1.0 and other weights or penalties changed relative to it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -113,40 +127,6 @@
        </widget>
       </item>
       <item row="8" column="0">
-       <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
-        <property name="text">
-         <string>Strain penalty</string>
-        </property>
-        <property name="tristate">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on finite (Lagrange) strains relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
-       <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
-        <property name="text">
-         <string>Curvature penalty</string>
-        </property>
-        <property name="tristate">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on curvature (gradient of displacement gradient) relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values per coordinate component for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
        <widget class="QCheckBox" name="groupFitDataSlidingFactor_checkBox">
         <property name="text">
          <string>Data sliding factor:</string>
@@ -156,14 +136,14 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="8" column="1">
        <widget class="QLineEdit" name="groupFitDataSlidingFactor_lineEdit">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Factor multiplying group weight in sliding directions.&lt;/p&gt;&lt;p&gt;Default value 0.1 gives some sliding resistance.&lt;/p&gt;&lt;p&gt;Value 0.0 gives zero sliding resistance. Note a small positive value &amp;lt;&amp;lt; 1.0 may aid stability in the absence of other constraints.&lt;/p&gt;&lt;p&gt;Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
+      <item row="9" column="0">
        <widget class="QCheckBox" name="groupFitDataStretch_checkBox">
         <property name="text">
          <string>Stretch to data:</string>
@@ -173,7 +153,7 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
+      <item row="9" column="1">
        <widget class="QCheckBox" name="groupFitDataStretchSet_checkBox">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Default On stretches model to span of data by applying full data weight in projection tangent direction where projections have a non-negligible tangent component.&lt;/p&gt;&lt;p&gt;Set to Off for groups cut to variable lengths between specimens so feature is oriented but keeps reference length from model.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -183,17 +163,51 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QCheckBox" name="groupConfigOutlierLength_checkBox">
+      <item row="10" column="0">
+       <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
         <property name="text">
-         <string>Outlier length:</string>
+         <string>Strain penalty</string>
+        </property>
+        <property name="tristate">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="groupConfigOutlierLength_lineEdit">
+      <item row="10" column="1">
+       <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Value for excluding outlier data points based on projection length:&lt;/p&gt;&lt;p&gt;&amp;lt; 0.0: Proportion of maximum projection length to exclude e.g. -0.1 removes data points with projections within 10% of maximum.&lt;/p&gt;&lt;p&gt;0.0: No outlier exclusion applied.&lt;/p&gt;&lt;p&gt;&amp;gt;0.0: Positive absolute projection length above which data points are excluded.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on finite (Lagrange) strains relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0">
+       <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
+        <property name="text">
+         <string>Curvature penalty</string>
+        </property>
+        <property name="tristate">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="1">
+       <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on curvature (gradient of displacement gradient) relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values per coordinate component for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="groupConfigProjectionSubgroup_checkBox">
+        <property name="text">
+         <string>Projection subgroup:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="FieldChooserWidget" name="groupConfigProjectionSubgroup_fieldChooser">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional subgroup to restrict projections to its intersection with the main group.&lt;/p&gt;&lt;p&gt;Must be a 1-D or 2-D group and may be lower dimension than the main group.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>

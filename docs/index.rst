@@ -117,6 +117,8 @@ The *Outlier length* controls how remaining data points are excluded depending o
 
 The *Central projection* is more specialized: if set (by checking the option AND the *Set* checkbox), the geometric centre of the data and the scaffold group are calculated, and the data is projected as if these are at the same point; this is useful for early fitting steps where small features are not close to their matching data, but it is usually cancelled for later fit steps (but occasionally it converges to the same solution whether on or off). The Central projection feature has been used to help fit the pink pulmonary vein groups in the rat heart atria in :numref:`fig-mcpgf-scaffold-data-annotation-groups`.
 
+The *Projection subgroup* specifies an optional group restricting data projections to its 2-D or 1-D intersection with the main group. This may be a lower dimensional mesh than the main annotation group, but must be within the bounds of the highest dimensional mesh which is being fitted.
+
 Config parameters for each group are inherited from prior Config steps for that group, and if not set, from the ``- Default -`` group. Previously set group parameters are shown as "half-checked" (using a "tri-state" checkbox), and this can be overridden with a new value (fully checked) or cancelled to prior defaults (unchecked). The value used for that group is always shown.
 
 Align
