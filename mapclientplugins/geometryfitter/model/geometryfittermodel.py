@@ -207,7 +207,7 @@ class GeometryFitterModel(object):
 
     def _setMultipleGraphicsVisibility(self, graphicsPartName, show, selectMode=None):
         """
-        Ensure visibility of all graphics starting with graphicsPartName is set to boolean show.
+        Ensure visibility of all graphics containing graphicsPartName is set to boolean show.
         :param graphicsPartName: Part of the graphics name to match.
         :param show: Boolean to set visibility.
         :param selectMode: Optional selectMode to set at the same time.
@@ -338,19 +338,19 @@ class GeometryFitterModel(object):
         return self._getVisibility("displayDataProjections")
 
     def setDisplayDataProjections(self, show):
-        self._setVisibility("displayDataProjections", show)
+        self._setMultipleGraphicsVisibility("displayDataProjections", show)
 
     def isDisplayDataProjectionPoints(self):
         return self._getVisibility("displayDataProjectionPoints")
 
     def setDisplayDataProjectionPoints(self, show):
-        self._setVisibility("displayDataProjectionPoints", show)
+        self._setMultipleGraphicsVisibility("displayDataProjectionPoints", show)
 
     def isDisplayDataProjectionTangents(self):
         return self._getVisibility("displayDataProjectionTangents")
 
     def setDisplayDataProjectionTangents(self, show):
-        self._setVisibility("displayDataProjectionTangents", show)
+        self._setMultipleGraphicsVisibility("displayDataProjectionTangents", show)
 
     def isDisplayNodeNumbers(self):
         return self._getVisibility("displayNodeNumbers")
