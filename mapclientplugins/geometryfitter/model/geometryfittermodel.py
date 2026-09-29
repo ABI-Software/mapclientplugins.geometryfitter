@@ -3,6 +3,7 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
+import logging
 
 from cmlibs.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
     matrix_mult, rotation_matrix_to_euler, matrix_inv, identity_matrix
@@ -21,6 +22,8 @@ from cmlibs.zinc.scenefilter import Scenefilter
 from cmlibs.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WORLD
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
+
+logger = logging.getLogger(__name__)
 
 
 class GeometryFitterModel(object):
@@ -141,7 +144,12 @@ class GeometryFitterModel(object):
                     os.remove(displaySettingsFileName)
             else:
                 with open(displaySettingsFileName, "r") as f:
-                    savedSettings = json.loads(f.read())
+                    try:
+                        savedSettings = json.loads(f.read())
+                    except json.JSONDecodeError:
+                        savedSettings = {}
+                        logger.warning("Could not decode geometry fitter display settings.")
+
                     settings_id = savedSettings.get('id')
                     if settings_id is not None:
                         assert settings_id == self.GEOMETRY_FITTER_DISPLAY_SETTINGS_ID
