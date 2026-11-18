@@ -134,10 +134,7 @@ class GeometryFitterModel(object):
             else:
                 with open(fitSettingsFileName, "r") as f:
                     self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
-        # except:
-        #    print('_loadSettings FitSettings EXCEPTION')
-        #    raise()
-        # try:
+
         displaySettingsFileName = self.getJsonDisplaySettingsFilename()
         if os.path.isfile(displaySettingsFileName):
             if reset_settings:
@@ -145,22 +142,24 @@ class GeometryFitterModel(object):
                     os.remove(displaySettingsFileName)
             else:
                 with open(displaySettingsFileName, "r") as f:
-                    savedSettings = json.loads(f.read())
-                    settings_id = savedSettings.get('id')
-                    if settings_id is not None:
-                        assert settings_id == self.GEOMETRY_FITTER_DISPLAY_SETTINGS_ID
-                        assert savedSettings['version'] == '1.0.0'  # future: migrate if version changes
-                        # these are not stored:
-                        del savedSettings['id']
-                        del savedSettings['version']
-                    # migrate to tristate:
-                    displayNodeDerivatives = savedSettings.get('displayNodeDerivatives')
-                    if isinstance(displayNodeDerivatives, bool):
-                        savedSettings['displayNodeDerivatives'] = 2 if displayNodeDerivatives else 0
-                    self._displaySettings.update(savedSettings)
-        # except:
-        #    print('_loadSettings DisplaySettings EXCEPTION')
-        #    pass
+                    try:
+                        savedSettings = json.loads(f.read())
+                    except json.JSONDecodeError:
+                        savedSettings = {}
+                        logger.warning("Could not decode geometry fitter display settings.")
+
+                settings_id = savedSettings.get('id')
+                if settings_id is not None:
+                    assert settings_id == self.GEOMETRY_FITTER_DISPLAY_SETTINGS_ID
+                    assert savedSettings['version'] == '1.0.0'  # future: migrate if version changes
+                    # these are not stored:
+                    del savedSettings['id']
+                    del savedSettings['version']
+                # migrate to tristate:
+                displayNodeDerivatives = savedSettings.get('displayNodeDerivatives')
+                if isinstance(displayNodeDerivatives, bool):
+                    savedSettings['displayNodeDerivatives'] = 2 if displayNodeDerivatives else 0
+                self._displaySettings.update(savedSettings)
 
     def _saveSettings(self):
         with open(self.getJsonSettingsFilename(), "w") as f:
