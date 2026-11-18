@@ -1,8 +1,9 @@
 """
 Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfitter
 """
-import os
 import json
+import logging
+import os
 
 from cmlibs.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
     matrix_mult, rotation_matrix_to_euler, matrix_inv, identity_matrix
@@ -21,6 +22,9 @@ from cmlibs.zinc.scenefilter import Scenefilter
 from cmlibs.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WORLD
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
+
+
+logger = logging.getLogger(__name__)
 
 
 class GeometryFitterModel(object):
@@ -217,6 +221,8 @@ class GeometryFitterModel(object):
         while graphics.isValid():
             graphicsName = graphics.getName()
             if graphicsPartName in graphicsName:
+                if graphicsPartName == graphicsName:
+                    self._displaySettings[graphicsName] = show
                 graphics.setVisibilityFlag(show)
                 if selectMode:
                     graphics.setSelectMode(selectMode)
@@ -332,7 +338,7 @@ class GeometryFitterModel(object):
         return self._getVisibility("displayDataPoints")
 
     def setDisplayDataPoints(self, show):
-        self._setVisibility("displayDataPoints", show)
+        self._setMultipleGraphicsVisibility("displayDataPoints", show)
 
     def isDisplayDataProjections(self):
         return self._getVisibility("displayDataProjections")
@@ -623,6 +629,21 @@ class GeometryFitterModel(object):
             # data points, projections and projection points
 
             dataCoordinates = self._fitter.getDataCoordinatesField()
+
+            dataPointsOnBoundary = scene.createGraphicsPoints()
+            dataPointsOnBoundary.setScenecoordinatesystem(SCENECOORDINATESYSTEM_WORLD)
+            dataPointsOnBoundary.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            dataOnBoundaryGroup = self._fitter.getDataOnBoundaryGroup()
+            dataPointsOnBoundary.setSubgroupField(dataOnBoundaryGroup)
+            if dataCoordinates:
+                dataPointsOnBoundary.setCoordinateField(dataCoordinates)
+            pointattr = dataPointsOnBoundary.getGraphicspointattributes()
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+            dataPointsOnBoundary.setRenderPointSize(3.0)
+            dataPointsOnBoundary.setMaterial(self._materialmodule.findMaterialByName("brown"))
+            dataPointsOnBoundary.setName("displayDataPoints")
+            dataPointsOnBoundary.setVisibilityFlag(self.isDisplayDataPoints())
+
             dataPoints = scene.createGraphicsPoints()
             dataPoints.setScenecoordinatesystem(SCENECOORDINATESYSTEM_WORLD)
             dataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)

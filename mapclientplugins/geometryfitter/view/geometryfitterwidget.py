@@ -26,6 +26,7 @@ from mapclientplugins.geometryfitter.view.ui_geometryfitterwidget import Ui_Geom
 from mapclientplugins.geometryfitter.view.ui_stepswidget import Ui_Steps
 from mapclientplugins.geometryfitter.view.ui_errorstatisticswidget import Ui_ErrorStatistics
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -615,8 +616,8 @@ class GeometryFitterWidget(QtWidgets.QMainWindow):
         self._steps_ui.groupSettings_widget.groupFitDataWeight_lineEdit.editingFinished.connect(self._groupFitDataWeightEntered)
         self._steps_ui.groupSettings_widget.groupFitDataSlidingFactor_checkBox.clicked.connect(self._groupFitDataSlidingFactorClicked)
         self._steps_ui.groupSettings_widget.groupFitDataSlidingFactor_lineEdit.editingFinished.connect(self._groupFitDataSlidingFactorEntered)
-        self._steps_ui.groupSettings_widget.groupFitDataStretch_checkBox.clicked.connect(self._groupFitDataStretchClicked)
-        self._steps_ui.groupSettings_widget.groupFitDataStretchSet_checkBox.clicked.connect(self._groupFitDataStretchSetClicked)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_checkBox.clicked.connect(self._groupFitDataStretchFactorClicked)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_lineEdit.editingFinished.connect(self._groupFitDataStretchFactorEntered)
         self._steps_ui.groupSettings_widget.groupFitStrainPenalty_checkBox.clicked.connect(self._groupFitStrainPenaltyClicked)
         self._steps_ui.groupSettings_widget.groupFitStrainPenalty_lineEdit.editingFinished.connect(self._groupFitStrainPenaltyEntered)
         self._steps_ui.groupSettings_widget.groupFitCurvaturePenalty_checkBox.clicked.connect(self._groupFitCurvaturePenaltyClicked)
@@ -637,7 +638,7 @@ class GeometryFitterWidget(QtWidgets.QMainWindow):
         elif isFit:
             self._updateGroupFitDataWeight()
             self._updateGroupFitDataSlidingFactor()
-            self._updateGroupFitDataStretch()
+            self._updateGroupFitDataStretchFactor()
             self._updateGroupFitStrainPenalty()
             self._updateGroupFitCurvaturePenalty()
         self._steps_ui.groupSettings_widget.groupConfigCentralProjection_checkBox.setVisible(isConfig)
@@ -652,8 +653,8 @@ class GeometryFitterWidget(QtWidgets.QMainWindow):
         self._steps_ui.groupSettings_widget.groupFitDataWeight_lineEdit.setVisible(isFit)
         self._steps_ui.groupSettings_widget.groupFitDataSlidingFactor_checkBox.setVisible(isFit)
         self._steps_ui.groupSettings_widget.groupFitDataSlidingFactor_lineEdit.setVisible(isFit)
-        self._steps_ui.groupSettings_widget.groupFitDataStretch_checkBox.setVisible(isFit)
-        self._steps_ui.groupSettings_widget.groupFitDataStretchSet_checkBox.setVisible(isFit)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_checkBox.setVisible(isFit)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_lineEdit.setVisible(isFit)
         self._steps_ui.groupSettings_widget.groupFitStrainPenalty_checkBox.setVisible(isFit)
         self._steps_ui.groupSettings_widget.groupFitStrainPenalty_lineEdit.setVisible(isFit)
         self._steps_ui.groupSettings_widget.groupFitCurvaturePenalty_checkBox.setVisible(isFit)
@@ -868,30 +869,30 @@ class GeometryFitterWidget(QtWidgets.QMainWindow):
         self._getFit().setGroupDataSlidingFactor(groupName, value)
         self._updateGroupFitDataSlidingFactor()
 
-    def _updateGroupFitDataStretch(self):
-        checkBoxTristate, checkBoxState, lineEditDisable, isFitDataStretchSet = \
-            self._getGroupSettingDisplayState(self._getFit().getGroupDataStretch)
-        self._steps_ui.groupSettings_widget.groupFitDataStretch_checkBox.setTristate(checkBoxTristate)
-        self._steps_ui.groupSettings_widget.groupFitDataStretch_checkBox.setCheckState(checkBoxState)
-        self._steps_ui.groupSettings_widget.groupFitDataStretchSet_checkBox.setDisabled(lineEditDisable)
-        self._steps_ui.groupSettings_widget.groupFitDataStretchSet_checkBox.setCheckState(
-            QtCore.Qt.CheckState.Checked if isFitDataStretchSet else QtCore.Qt.CheckState.Unchecked)
+    def _updateGroupFitDataStretchFactor(self):
+        checkBoxTristate, checkBoxState, lineEditDisable, dataStretchFactorStr = \
+            self._getGroupSettingDisplayState(self._getFit().getGroupDataStretchFactor)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_checkBox.setTristate(checkBoxTristate)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_checkBox.setCheckState(checkBoxState)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_lineEdit.setDisabled(lineEditDisable)
+        self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_lineEdit.setText(dataStretchFactorStr)
 
-    def _groupFitDataStretchClicked(self):
-        checkState = self._steps_ui.groupSettings_widget.groupFitDataStretch_checkBox.checkState()
+    def _groupFitDataStretchFactorClicked(self):
+        checkState = self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_checkBox.checkState()
         groupName = self._getGroupSettingsGroupName()
         if checkState == QtCore.Qt.CheckState.Unchecked:
-            self._getFit().setGroupDataStretch(groupName, None)
+            self._getFit().setGroupDataStretchFactor(groupName, None)
         elif checkState == QtCore.Qt.CheckState.PartiallyChecked:
-            self._getFit().clearGroupDataStretch(groupName)
+            self._getFit().clearGroupDataStretchFactor(groupName)
         else:
-            self._groupFitDataStretchSetClicked()
-        self._updateGroupFitDataStretch()
+            self._groupFitDataStretchFactorEntered()
+        self._updateGroupFitDataStretchFactor()
 
-    def _groupFitDataStretchSetClicked(self):
-        state = self._steps_ui.groupSettings_widget.groupFitDataStretchSet_checkBox.checkState()
+    def _groupFitDataStretchFactorEntered(self):
+        value = parse_real_non_negative(self._steps_ui.groupSettings_widget.groupFitDataStretchFactor_lineEdit)
         groupName = self._getGroupSettingsGroupName()
-        self._getFit().setGroupDataStretch(groupName, state == QtCore.Qt.CheckState.Checked)
+        self._getFit().setGroupDataStretchFactor(groupName, value)
+        self._updateGroupFitDataStretchFactor()
 
     def _updateGroupFitStrainPenalty(self):
         checkBoxTristate, checkBoxState, lineEditDisable, dataStr = \
