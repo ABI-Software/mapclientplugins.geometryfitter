@@ -1038,9 +1038,8 @@ class GeometryFitterWidget(QtWidgets.QMainWindow):
         Callback for change in marker group field chooser widget.
         """
         group = self._steps_ui.initialConfig_widget.configMarkerGroup_fieldChooser.getField()
-        if group:
-            self._fitter.setMarkerGroup(group)
-            self._model.createGraphics()
+        self._fitter.setMarkerGroup(group)
+        self._model.createGraphics()
 
     def _configDiagnosticLevelValueChanged(self, value):
         self._fitter.setDiagnosticLevel(value)
