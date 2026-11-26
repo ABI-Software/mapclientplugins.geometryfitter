@@ -1,9 +1,9 @@
 """
 Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfitter
 """
-import os
 import json
 import logging
+import os
 
 from cmlibs.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
     matrix_mult, rotation_matrix_to_euler, matrix_inv, identity_matrix
@@ -22,6 +22,7 @@ from cmlibs.zinc.scenefilter import Scenefilter
 from cmlibs.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WORLD
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
+
 
 logger = logging.getLogger(__name__)
 
@@ -209,7 +210,7 @@ class GeometryFitterModel(object):
 
     def _setMultipleGraphicsVisibility(self, graphicsPartName, show, selectMode=None):
         """
-        Ensure visibility of all graphics starting with graphicsPartName is set to boolean show.
+        Ensure visibility of all graphics containing graphicsPartName is set to boolean show.
         :param graphicsPartName: Part of the graphics name to match.
         :param show: Boolean to set visibility.
         :param selectMode: Optional selectMode to set at the same time.
@@ -219,6 +220,8 @@ class GeometryFitterModel(object):
         while graphics.isValid():
             graphicsName = graphics.getName()
             if graphicsPartName in graphicsName:
+                if graphicsPartName == graphicsName:
+                    self._displaySettings[graphicsName] = show
                 graphics.setVisibilityFlag(show)
                 if selectMode:
                     graphics.setSelectMode(selectMode)
@@ -334,25 +337,25 @@ class GeometryFitterModel(object):
         return self._getVisibility("displayDataPoints")
 
     def setDisplayDataPoints(self, show):
-        self._setVisibility("displayDataPoints", show)
+        self._setMultipleGraphicsVisibility("displayDataPoints", show)
 
     def isDisplayDataProjections(self):
         return self._getVisibility("displayDataProjections")
 
     def setDisplayDataProjections(self, show):
-        self._setVisibility("displayDataProjections", show)
+        self._setMultipleGraphicsVisibility("displayDataProjections", show)
 
     def isDisplayDataProjectionPoints(self):
         return self._getVisibility("displayDataProjectionPoints")
 
     def setDisplayDataProjectionPoints(self, show):
-        self._setVisibility("displayDataProjectionPoints", show)
+        self._setMultipleGraphicsVisibility("displayDataProjectionPoints", show)
 
     def isDisplayDataProjectionTangents(self):
         return self._getVisibility("displayDataProjectionTangents")
 
     def setDisplayDataProjectionTangents(self, show):
-        self._setVisibility("displayDataProjectionTangents", show)
+        self._setMultipleGraphicsVisibility("displayDataProjectionTangents", show)
 
     def isDisplayNodeNumbers(self):
         return self._getVisibility("displayNodeNumbers")
@@ -625,6 +628,21 @@ class GeometryFitterModel(object):
             # data points, projections and projection points
 
             dataCoordinates = self._fitter.getDataCoordinatesField()
+
+            dataPointsOnBoundary = scene.createGraphicsPoints()
+            dataPointsOnBoundary.setScenecoordinatesystem(SCENECOORDINATESYSTEM_WORLD)
+            dataPointsOnBoundary.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            dataOnBoundaryGroup = self._fitter.getDataOnBoundaryGroup()
+            dataPointsOnBoundary.setSubgroupField(dataOnBoundaryGroup)
+            if dataCoordinates:
+                dataPointsOnBoundary.setCoordinateField(dataCoordinates)
+            pointattr = dataPointsOnBoundary.getGraphicspointattributes()
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+            dataPointsOnBoundary.setRenderPointSize(3.0)
+            dataPointsOnBoundary.setMaterial(self._materialmodule.findMaterialByName("brown"))
+            dataPointsOnBoundary.setName("displayDataPoints")
+            dataPointsOnBoundary.setVisibilityFlag(self.isDisplayDataPoints())
+
             dataPoints = scene.createGraphicsPoints()
             dataPoints.setScenecoordinatesystem(SCENECOORDINATESYSTEM_WORLD)
             dataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'groupsettingswidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.1
+## Created by: Qt User Interface Compiler version 6.12.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -25,7 +25,7 @@ class Ui_GroupSettingsWidget(object):
     def setupUi(self, GroupSettingsWidget):
         if not GroupSettingsWidget.objectName():
             GroupSettingsWidget.setObjectName(u"GroupSettingsWidget")
-        GroupSettingsWidget.resize(365, 319)
+        GroupSettingsWidget.resize(365, 353)
         self.horizontalLayout = QHBoxLayout(GroupSettingsWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -42,7 +42,7 @@ class Ui_GroupSettingsWidget(object):
         self.groupSettings_label = QLabel(self.groupSettings_groupBox)
         self.groupSettings_label.setObjectName(u"groupSettings_label")
 
-        self.groupSettings_Layout.setWidget(1, QFormLayout.LabelRole, self.groupSettings_label)
+        self.groupSettings_Layout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.groupSettings_label)
 
         self.groupSettings_fieldChooser = FieldChooserWidget(self.groupSettings_groupBox)
         self.groupSettings_fieldChooser.setObjectName(u"groupSettings_fieldChooser")
@@ -52,104 +52,104 @@ class Ui_GroupSettingsWidget(object):
         sizePolicy1.setHeightForWidth(self.groupSettings_fieldChooser.sizePolicy().hasHeightForWidth())
         self.groupSettings_fieldChooser.setSizePolicy(sizePolicy1)
 
-        self.groupSettings_Layout.setWidget(1, QFormLayout.FieldRole, self.groupSettings_fieldChooser)
+        self.groupSettings_Layout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.groupSettings_fieldChooser)
 
         self.groupConfigCentralProjection_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigCentralProjection_checkBox.setObjectName(u"groupConfigCentralProjection_checkBox")
 
-        self.groupSettings_Layout.setWidget(2, QFormLayout.LabelRole, self.groupConfigCentralProjection_checkBox)
+        self.groupSettings_Layout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.groupConfigCentralProjection_checkBox)
 
         self.groupConfigCentralProjectionSet_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigCentralProjectionSet_checkBox.setObjectName(u"groupConfigCentralProjectionSet_checkBox")
         self.groupConfigCentralProjectionSet_checkBox.setTristate(False)
 
-        self.groupSettings_Layout.setWidget(2, QFormLayout.FieldRole, self.groupConfigCentralProjectionSet_checkBox)
+        self.groupSettings_Layout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.groupConfigCentralProjectionSet_checkBox)
 
         self.groupConfigDataProportion_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigDataProportion_checkBox.setObjectName(u"groupConfigDataProportion_checkBox")
         self.groupConfigDataProportion_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(4, QFormLayout.LabelRole, self.groupConfigDataProportion_checkBox)
+        self.groupSettings_Layout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.groupConfigDataProportion_checkBox)
 
         self.groupConfigDataProportion_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupConfigDataProportion_lineEdit.setObjectName(u"groupConfigDataProportion_lineEdit")
 
-        self.groupSettings_Layout.setWidget(4, QFormLayout.FieldRole, self.groupConfigDataProportion_lineEdit)
+        self.groupSettings_Layout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.groupConfigDataProportion_lineEdit)
 
         self.groupConfigOutlierLength_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigOutlierLength_checkBox.setObjectName(u"groupConfigOutlierLength_checkBox")
 
-        self.groupSettings_Layout.setWidget(5, QFormLayout.LabelRole, self.groupConfigOutlierLength_checkBox)
+        self.groupSettings_Layout.setWidget(5, QFormLayout.ItemRole.LabelRole, self.groupConfigOutlierLength_checkBox)
 
         self.groupConfigOutlierLength_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupConfigOutlierLength_lineEdit.setObjectName(u"groupConfigOutlierLength_lineEdit")
 
-        self.groupSettings_Layout.setWidget(5, QFormLayout.FieldRole, self.groupConfigOutlierLength_lineEdit)
+        self.groupSettings_Layout.setWidget(5, QFormLayout.ItemRole.FieldRole, self.groupConfigOutlierLength_lineEdit)
 
         self.groupFitDataWeight_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitDataWeight_checkBox.setObjectName(u"groupFitDataWeight_checkBox")
         self.groupFitDataWeight_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(7, QFormLayout.LabelRole, self.groupFitDataWeight_checkBox)
+        self.groupSettings_Layout.setWidget(7, QFormLayout.ItemRole.LabelRole, self.groupFitDataWeight_checkBox)
 
         self.groupFitDataWeight_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitDataWeight_lineEdit.setObjectName(u"groupFitDataWeight_lineEdit")
 
-        self.groupSettings_Layout.setWidget(7, QFormLayout.FieldRole, self.groupFitDataWeight_lineEdit)
+        self.groupSettings_Layout.setWidget(7, QFormLayout.ItemRole.FieldRole, self.groupFitDataWeight_lineEdit)
 
         self.groupFitDataSlidingFactor_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitDataSlidingFactor_checkBox.setObjectName(u"groupFitDataSlidingFactor_checkBox")
         self.groupFitDataSlidingFactor_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(8, QFormLayout.LabelRole, self.groupFitDataSlidingFactor_checkBox)
+        self.groupSettings_Layout.setWidget(8, QFormLayout.ItemRole.LabelRole, self.groupFitDataSlidingFactor_checkBox)
 
         self.groupFitDataSlidingFactor_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitDataSlidingFactor_lineEdit.setObjectName(u"groupFitDataSlidingFactor_lineEdit")
 
-        self.groupSettings_Layout.setWidget(8, QFormLayout.FieldRole, self.groupFitDataSlidingFactor_lineEdit)
+        self.groupSettings_Layout.setWidget(8, QFormLayout.ItemRole.FieldRole, self.groupFitDataSlidingFactor_lineEdit)
 
-        self.groupFitDataStretch_checkBox = QCheckBox(self.groupSettings_groupBox)
-        self.groupFitDataStretch_checkBox.setObjectName(u"groupFitDataStretch_checkBox")
-        self.groupFitDataStretch_checkBox.setTristate(True)
+        self.groupFitDataStretchFactor_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupFitDataStretchFactor_checkBox.setObjectName(u"groupFitDataStretchFactor_checkBox")
+        self.groupFitDataStretchFactor_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(9, QFormLayout.LabelRole, self.groupFitDataStretch_checkBox)
-
-        self.groupFitDataStretchSet_checkBox = QCheckBox(self.groupSettings_groupBox)
-        self.groupFitDataStretchSet_checkBox.setObjectName(u"groupFitDataStretchSet_checkBox")
-
-        self.groupSettings_Layout.setWidget(9, QFormLayout.FieldRole, self.groupFitDataStretchSet_checkBox)
+        self.groupSettings_Layout.setWidget(9, QFormLayout.ItemRole.LabelRole, self.groupFitDataStretchFactor_checkBox)
 
         self.groupFitStrainPenalty_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitStrainPenalty_checkBox.setObjectName(u"groupFitStrainPenalty_checkBox")
         self.groupFitStrainPenalty_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(10, QFormLayout.LabelRole, self.groupFitStrainPenalty_checkBox)
+        self.groupSettings_Layout.setWidget(10, QFormLayout.ItemRole.LabelRole, self.groupFitStrainPenalty_checkBox)
 
         self.groupFitStrainPenalty_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitStrainPenalty_lineEdit.setObjectName(u"groupFitStrainPenalty_lineEdit")
 
-        self.groupSettings_Layout.setWidget(10, QFormLayout.FieldRole, self.groupFitStrainPenalty_lineEdit)
+        self.groupSettings_Layout.setWidget(10, QFormLayout.ItemRole.FieldRole, self.groupFitStrainPenalty_lineEdit)
 
         self.groupFitCurvaturePenalty_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitCurvaturePenalty_checkBox.setObjectName(u"groupFitCurvaturePenalty_checkBox")
         self.groupFitCurvaturePenalty_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(11, QFormLayout.LabelRole, self.groupFitCurvaturePenalty_checkBox)
+        self.groupSettings_Layout.setWidget(11, QFormLayout.ItemRole.LabelRole, self.groupFitCurvaturePenalty_checkBox)
 
         self.groupFitCurvaturePenalty_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitCurvaturePenalty_lineEdit.setObjectName(u"groupFitCurvaturePenalty_lineEdit")
 
-        self.groupSettings_Layout.setWidget(11, QFormLayout.FieldRole, self.groupFitCurvaturePenalty_lineEdit)
+        self.groupSettings_Layout.setWidget(11, QFormLayout.ItemRole.FieldRole, self.groupFitCurvaturePenalty_lineEdit)
 
         self.groupConfigProjectionSubgroup_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigProjectionSubgroup_checkBox.setObjectName(u"groupConfigProjectionSubgroup_checkBox")
 
-        self.groupSettings_Layout.setWidget(6, QFormLayout.LabelRole, self.groupConfigProjectionSubgroup_checkBox)
+        self.groupSettings_Layout.setWidget(6, QFormLayout.ItemRole.LabelRole, self.groupConfigProjectionSubgroup_checkBox)
 
         self.groupConfigProjectionSubgroup_fieldChooser = FieldChooserWidget(self.groupSettings_groupBox)
         self.groupConfigProjectionSubgroup_fieldChooser.setObjectName(u"groupConfigProjectionSubgroup_fieldChooser")
 
-        self.groupSettings_Layout.setWidget(6, QFormLayout.FieldRole, self.groupConfigProjectionSubgroup_fieldChooser)
+        self.groupSettings_Layout.setWidget(6, QFormLayout.ItemRole.FieldRole, self.groupConfigProjectionSubgroup_fieldChooser)
+
+        self.groupFitDataStretchFactor_lineEdit = QLineEdit(self.groupSettings_groupBox)
+        self.groupFitDataStretchFactor_lineEdit.setObjectName(u"groupFitDataStretchFactor_lineEdit")
+
+        self.groupSettings_Layout.setWidget(9, QFormLayout.ItemRole.FieldRole, self.groupFitDataStretchFactor_lineEdit)
 
 
         self.horizontalLayout.addWidget(self.groupSettings_groupBox)
@@ -185,11 +185,10 @@ class Ui_GroupSettingsWidget(object):
 #if QT_CONFIG(tooltip)
         self.groupFitDataSlidingFactor_lineEdit.setToolTip(QCoreApplication.translate("GroupSettingsWidget", u"<html><head/><body><p>Factor multiplying group weight in sliding directions.</p><p>Default value 0.1 gives some sliding resistance.</p><p>Value 0.0 gives zero sliding resistance. Note a small positive value &lt;&lt; 1.0 may aid stability in the absence of other constraints.</p><p>Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.groupFitDataStretch_checkBox.setText(QCoreApplication.translate("GroupSettingsWidget", u"Stretch to data:", None))
 #if QT_CONFIG(tooltip)
-        self.groupFitDataStretchSet_checkBox.setToolTip(QCoreApplication.translate("GroupSettingsWidget", u"<html><head/><body><p>Default On stretches model to span of data by applying full data weight in projection tangent direction where projections have a non-negligible tangent component.</p><p>Set to Off for groups cut to variable lengths between specimens so feature is oriented but keeps reference length from model.</p></body></html>", None))
+        self.groupFitDataStretchFactor_checkBox.setToolTip("")
 #endif // QT_CONFIG(tooltip)
-        self.groupFitDataStretchSet_checkBox.setText(QCoreApplication.translate("GroupSettingsWidget", u"Set", None))
+        self.groupFitDataStretchFactor_checkBox.setText(QCoreApplication.translate("GroupSettingsWidget", u"Data stretch factor:", None))
         self.groupFitStrainPenalty_checkBox.setText(QCoreApplication.translate("GroupSettingsWidget", u"Strain penalty", None))
 #if QT_CONFIG(tooltip)
         self.groupFitStrainPenalty_lineEdit.setToolTip(QCoreApplication.translate("GroupSettingsWidget", u"<html><head/><body><p>Penalty on finite (Lagrange) strains relative to last reference state.</p><p>Up to 9 values for 3D model fit, 4 for 2D, 1 for 1D.</p></body></html>", None))
@@ -201,6 +200,9 @@ class Ui_GroupSettingsWidget(object):
         self.groupConfigProjectionSubgroup_checkBox.setText(QCoreApplication.translate("GroupSettingsWidget", u"Projection subgroup:", None))
 #if QT_CONFIG(tooltip)
         self.groupConfigProjectionSubgroup_fieldChooser.setToolTip(QCoreApplication.translate("GroupSettingsWidget", u"<html><head/><body><p>Optional subgroup to restrict projections to its intersection with the main group.</p><p>Must be a 1-D or 2-D group and may be lower dimension than the main group.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.groupFitDataStretchFactor_lineEdit.setToolTip(QCoreApplication.translate("GroupSettingsWidget", u"<html><head/><body><p>For data points projecting onto boundary of group: factor multiplying data weight to apply in the outward direction.</p><p>Default factor 1.0 applies some stretch of the group to the data. Higher values apply stretch with greater effect.</p><p>Low factors close to 0.0 apply little or no stretch so group tends to keep its original dimensions.</p><p>When applying stretch, typically also apply a low data sliding factor.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
     # retranslateUi
 

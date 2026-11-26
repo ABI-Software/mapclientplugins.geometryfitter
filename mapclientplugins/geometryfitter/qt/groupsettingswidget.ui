@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>365</width>
-    <height>319</height>
+    <height>353</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -144,22 +144,15 @@
        </widget>
       </item>
       <item row="9" column="0">
-       <widget class="QCheckBox" name="groupFitDataStretch_checkBox">
+       <widget class="QCheckBox" name="groupFitDataStretchFactor_checkBox">
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>Stretch to data:</string>
+         <string>Data stretch factor:</string>
         </property>
         <property name="tristate">
          <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QCheckBox" name="groupFitDataStretchSet_checkBox">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Default On stretches model to span of data by applying full data weight in projection tangent direction where projections have a non-negligible tangent component.&lt;/p&gt;&lt;p&gt;Set to Off for groups cut to variable lengths between specimens so feature is oriented but keeps reference length from model.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Set</string>
         </property>
        </widget>
       </item>
@@ -208,6 +201,13 @@
        <widget class="FieldChooserWidget" name="groupConfigProjectionSubgroup_fieldChooser">
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional subgroup to restrict projections to its intersection with the main group.&lt;/p&gt;&lt;p&gt;Must be a 1-D or 2-D group and may be lower dimension than the main group.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QLineEdit" name="groupFitDataStretchFactor_lineEdit">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For data points projecting onto boundary of group: factor multiplying data weight to apply in the outward direction.&lt;/p&gt;&lt;p&gt;Default factor 1.0 applies some stretch of the group to the data. Higher values apply stretch with greater effect.&lt;/p&gt;&lt;p&gt;Low factors close to 0.0 apply little or no stretch so group tends to keep its original dimensions.&lt;/p&gt;&lt;p&gt;When applying stretch, typically also apply a low data sliding factor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
