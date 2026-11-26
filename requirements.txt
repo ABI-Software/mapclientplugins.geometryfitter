@@ -2,5 +2,5 @@ cmlibs.maths >= 0.7.3
 cmlibs.utils >= 0.16.0
 cmlibs.widgets >= 0.9.3
 cmlibs.zinc >= 4.2.1
-scaffoldfitter >= 0.11.4
+scaffoldfitter >= 0.12.0
 PySide6
